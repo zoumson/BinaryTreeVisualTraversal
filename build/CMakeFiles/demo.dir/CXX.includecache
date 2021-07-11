@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/BinTreeNode.h
+
+/home/tutk/zouma/learning/project/BinaryTreeVisualTraversal/src/Demo.cpp
+BinTreeNode.h
+/home/tutk/zouma/learning/project/BinaryTreeVisualTraversal/src/BinTreeNode.h
+string
+-
+
