@@ -61,53 +61,73 @@ namespace za {
         cv::FILLED,
         cv::LINE_8 );
     }
-/*
+
     void MyText(cv::Mat &img, cv::String t, cv::Point Inorg , std::string marg)
     {
         int fontFace = cv::FONT_HERSHEY_SIMPLEX ;
-        int marVal = 12;
+        int marVal = 20;
         cv::Point org = Inorg ;
-        switch (marg)
-        {
-        case "l":
-            org.x -= marVal;
-            break;
-        case "r":
-            org.x += marVal;
-            break;
-        case "u":
-            org.y -= marVal;
-            break;
-        case "d":
-            org.y += marVal;
-            break;           
-        case "ld":
-            org.x -= marVal;
-            org.y -= marVal;
-            break;
-        case "lu":
-            org.x -= marVal;
-            org.y += marVal;
-            break;
-        case "ru":
-            org.x += marVal;
-            org.y -= marVal;
-            break;
-        case "rd":
-            org.x += marVal;
-            org.y += marVal;
-            break;        
-        case "n":
-            break;
-        
-        default:
-            break;
-        }
-        double fontScale = 0.5;
-        cv::putText (img, t, org, fontFace, fontScale, za::BLUE, 2);
+
+
+    if (marg == "l")
+    {
+        org.x -= marVal;   
+    }
+
+    else if (marg == "r")
+    {
+        org.x += marVal; 
+    }
+    
+    else if (marg == "u")
+    {
+        org.y -= marVal;     
+    }
+    
+    else if (marg == "d")
+    {
+        org.y += marVal;    
+    }
+    
+    else if (marg == "ld")
+    {
+        org.x -= marVal;
+        org.y -= marVal;  
+    }
+    
+    else if (marg == "ld")
+    {
+        org.x -= marVal;
+        org.y += marVal;     
+    }
+    
+    else if (marg == "ru")
+    {
+        org.x += marVal;
+        org.y -= marVal;
+   
+    }
+    
+    else if (marg == "rd")
+    {
+        org.x += marVal;
+        org.y += marVal;
+    
+    }
+    
+    else if (marg == "n")
+    {
 
     }
-*/
+    else
+    {
+        
+    }
+        
+    double fontScale = 0.5;
+    cv::putText (img, t, org, fontFace, fontScale, za::BLUE, 2);
+
+    }
 
 }
 

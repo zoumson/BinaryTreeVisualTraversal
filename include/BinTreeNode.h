@@ -35,10 +35,10 @@
 
 #ifndef _Z_BIN_TREE_NODE_H_A_
 #define _Z_BIN_TREE_NODE_H_A_
-//#include <opencv2/core/types.hpp>
-//#include <string>
-//#include<opencv2/core/core.hpp>
-//#include<opencv2/imgproc/imgproc.hpp>
+#include <opencv2/core/types.hpp>
+#include <string>
+#include<opencv2/core/core.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
 namespace za {
 /**
  * Implementation of a Possible character for retrieving character
@@ -65,79 +65,26 @@ protected:
 public:
       BinTreeNode *left;
       BinTreeNode *right;
-      //cv::Point_< P > pos;
-      //std::string orientation;
+      cv::Point_< P > pos;
+      std::string orient;
     /* ============================================================================
     * Member Function Declaration
     * ============================================================================
     */
-    //auto val() const& -> const T& { return val_; }
-    /**
-     * \brief Default constructor.
-     *
-     * \details Constructor without argument.
-     *
-     * \return #TreeNode
-     * 
-     * \attention The default value is 0.
-     * 
-     */
-   //BinTreeNode() : val_(0), left(nullptr), right(nullptr), pos(cv::Point_< T>(0, 0){}
-   BinTreeNode() : val_(0), left(nullptr), right(nullptr){}
 
-   //BinTreeNode() : val_(0), left(nullptr), right(nullptr), pos(cv::Point_< int>(0, 0), orientation(std::string("n")){}
-
-    /**
-     * \brief Custom constructor.
-     *
-     * \details Custom constructor with value argument. 
-     *
-     * \param x tree node value, type is T.
-     *
-     * \return #BinTreeNode
-     * 
-     * \attention 
-     * 
-     */
-    //BinTreeNode(T &x, cv::Point_<P> &position) : val_(x), left(nullptr), right(nullptr), pos(position) {}
-    //BinTreeNode(T &&x, cv::Point_<P> &&position) : val_(x), left(nullptr), right(nullptr), pos(position){}
-    //BinTreeNode(T &x, cv::Point_<P> &position, std::string &ori) : val_(x), left(nullptr), right(nullptr), pos(position) , orientation(ori){}
-    //BinTreeNode(T &&x, cv::Point_<P> &&position, std::string &&ori) : val_(x), left(nullptr), right(nullptr), pos(position) , orientation(ori){}
+  
+  
+  BinTreeNode(T a = T()) : val_(a), left(nullptr), right(nullptr), pos(cv::Point_< int>(0, 0)), orient("n"){}
 
 
-    /**
-     * \brief Custom constructor.
-     *
-     * \details Constructor with children.
-     *
-     * \param x [in] compared possible characters, type is PossibleChar.
-     * \param left [in] left child, type is BinTreeNode.
-     * \param right [in] right child, type is BinTreeNode.
-     *
-     * \return # type is bool.
-     * 
-     * \attention 
-     * 
-     */
-    //BinTreeNode(T &x, BinTreeNode *left, BinTreeNode *right, cv::Point_<P> &position) : val_(x), left(left), right(right), pos(position){}
-    //BinTreeNode(T &&x, BinTreeNode *left, BinTreeNode *right, cv::Point_<P> &&position) : val_(x), left(left), right(right), pos(position){}
-    //BinTreeNode(T &x, BinTreeNode *left, BinTreeNode *right, cv::Point_<P> &position, std::string &o) : val_(x), left(left), right(right), pos(position), orientation(o){}
-    //BinTreeNode(T &&x, BinTreeNode *left, BinTreeNode *right, cv::Point_<P> &&position, std::string &&o) : val_(x), left(left), right(right), pos(position), orientation(o){}
+  BinTreeNode(T &x, cv::Point_<P> &position, std::string &ori) : val_(x), left(nullptr), right(nullptr), pos(position) , orient(ori){}
+  BinTreeNode(T &&x, cv::Point_<P> &&position, std::string &&ori) : val_(x), left(nullptr), right(nullptr), pos(position) , orient(ori){}
+
+
+  BinTreeNode(T &x, BinTreeNode *left, BinTreeNode *right, cv::Point_<P> &position, std::string &o) : val_(x), left(left), right(right), pos(position), orient(o){}
+  BinTreeNode(T &&x, BinTreeNode *left, BinTreeNode *right, cv::Point_<P> &&position, std::string &&o) : val_(x), left(left), right(right), pos(position), orient(o){}
    
-    /**
-     * \brief Custom constructor.
-     *
-     * \details Constructor with children.
-     *
-     * \param x [in] compared possible characters, type is PossibleChar.
-     * \param left [in] left child, type is BinTreeNode.
-     * \param right [in] right child, type is BinTreeNode.
-     *
-     * \return # type is bool.
-     * 
-     * \attention 
-     * 
-     */
+  auto val() const& -> const T& { return val_; }
 
   
 };

@@ -51,7 +51,7 @@ namespace za {
 
     void MyCircle( cv::Mat &img, cv::Point center );
 
-    //void MyText(cv::Mat &img, cv::String t, cv::Point Inorg , std::string marg);
+    void MyText(cv::Mat &img, cv::String t, cv::Point Inorg , std::string marg);
 }
 
 # endif	// _Z_DRAW_H_A_

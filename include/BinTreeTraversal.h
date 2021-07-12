@@ -200,16 +200,17 @@ namespace za {
      * \attention 
      * 
      */
+    
     template <typename T, typename P>
     std::vector<T> levelOrder(za::BinTreeNode<T, P> *root, bool print, cv::Mat &screen)
-    //std::vector<T> levelOrder(za::BinTreeNode<T, P> *root, bool print)
     {
         std::queue<BinTreeNode<T, P> *> store;
         std::vector<T> data;
         int total = 0;
         BinTreeNode<T, P> *current = nullptr;
         if(root) store.push(root);
-
+        int delay = 500;
+        std::string screenName = "Level-order Binary Tree Traversal";
         while (total = store.size())
         {
 
@@ -219,31 +220,38 @@ namespace za {
                 current = store.front();
                 store.pop();
                 data.push_back(current->val());
+                current->pos;
                 za::MyCircle(screen, current->pos);  
-                //za::MyText(screen, current->val(), current->pos,current->orientation);
+   
+                za::MyText(screen, current->val(), current->pos,current->orient);
+                cv::imshow(screenName, screen);
+                cv::waitKey(delay);
                 //Process left first   
                 if(current->left) 
                 {
                     store.push(current->left); 
-                    za::MyCircle(screen, current->left->pos); 
-                    //za::MyText(screen, current->left->val(), current->left->pos, current->orientation);
                     za::MyLine( screen, current->pos, current->left->pos) ;
+                    cv::imshow(screenName, screen);
+                    cv::waitKey(delay);
                 }
                 if(current->right)
                 {
                     store.push(current->right); 
-                    za::MyCircle(screen,current->right->pos); 
-                    //za::MyText(screen, current->right->val(), current->right->pos, current->orientation);
-                    za::MyLine( screen, current->pos, current->right->pos) ;                  
+                    za::MyLine( screen, current->pos, current->right->pos) ;  
+                    cv::imshow(screenName, screen);
+                    cv::waitKey(delay);                
                 }        
             }
  
      
         }
+  
+        cv::waitKey(0);                       
+
         if(print)
         {
             std::cout << "\n";
-            std::cout << "Level-order Binary Tree Traversal\n";
+            std::cout << screenName <<"\n";
             std::for_each(data.begin(), data.end(), [](T &x){std::cout << x << " ";});
             std::cout << "\n";
         }
