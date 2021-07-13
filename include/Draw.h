@@ -47,11 +47,11 @@ namespace za {
  * Global Constants
  * ============================================================================
  */
-    void MyLine( cv::Mat &img, cv::Point start, cv::Point end );
+    void MyLine( cv::Mat &img, cv::Point start, cv::Point end , cv::Scalar col);
 
-    void MyCircle( cv::Mat &img, cv::Point center );
+    void MyCircle( cv::Mat &img, cv::Point center, cv::Scalar col);
 
-    void MyText(cv::Mat &img, cv::String t, cv::Point Inorg , std::string marg);
+    void MyText(cv::Mat &img, cv::String t, cv::Point Inorg , std::string marg, cv::Scalar col);
 }
 
 # endif	// _Z_DRAW_H_A_

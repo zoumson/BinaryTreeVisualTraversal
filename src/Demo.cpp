@@ -33,8 +33,31 @@ void MyFilledCircle( cv::Mat &img, cv::Point center )
 */
 int main(int argc, char const *argv[])
 {
+          
+   cv::String keys =
+        "{o option |4            | trasversal option, 1-->Post order; 2-->Pre order;3-->In order;4-->Level order;}"         
+        "{s save |./result/trasversal   | trasversal video}"                 
+        "{help h usage ?    |      | show help message}";      
+  
+    cv::CommandLineParser parser(argc, argv, keys);
+    parser.about("Binary Tree Trasversal");
+    if (parser.has("help")) 
+    {
+        parser.printMessage();
+        return 0;
+    }
+  
+    int option = parser.get<int>("option"); 
+
+      
+    if (!parser.check()) 
+    {
+        parser.printErrors();
+        return -1;
+    }
+
     typedef za::BinTreeNode<std::string, int> Node;
-    cv::Mat screen(cv::Size(1500, 800),CV_8UC3, cv::Scalar(255,255,255));
+    cv::Mat screen(cv::Size(1500, 850),CV_8UC3, cv::Scalar(255,255,255));
     
     Node I("I", cv::Point_<int>(150, 720), "d");
     Node L("L", cv::Point_<int>(300, 720), "d");
@@ -60,11 +83,24 @@ int main(int argc, char const *argv[])
     Node D("D", &N, &H, cv::Point_<int>((N.pos.x + H.pos.x)/2, 320), "r");
     Node A("A", &C, &D, cv::Point_<int>((C.pos.x + D.pos.x)/2, 220), "u");
  
-    za::postOrder(&A, true);
+    switch (option)
+    {
+    case 1:
+      za::postOrder(&A, true);
+      break;
+    case 2:
+      za::preOrder(&A, true);
+      break;
+    case 3:
+      za::inOrder(&A, true);
+      break;
+    case 4:
+      za::levelOrder(&A, true, screen);
+      break;
 
-    za::preOrder(&A, true);
-    za::inOrder(&A, true);
-    za::levelOrder(&A, true, screen);
+    default:
+      break;
+    }
 
     return 0;
 }

@@ -52,6 +52,11 @@
 #include<opencv2/core.hpp>
 #include<opencv2/highgui.hpp>
 #include<opencv2/imgproc.hpp>
+#include "opencv2/opencv.hpp"
+#include <map>
+//#include "gif.h"
+
+//#include <math.h>
 namespace za {
 
     /* ============================================================================
@@ -69,7 +74,26 @@ namespace za {
      * \attention 
      * 
      */
+/*
+void SetPixel( int xx, int yy, uint8_t red, uint8_t grn, uint8_t blu )
+{
+    uint8_t* pixel = &image[(yy*width+xx)*4];
+    pixel[0] = red;
+    pixel[1] = blu;
+    pixel[2] = grn;
+    pixel[3] = 255;  // no alpha for this demo
+}
 
+void SetPixelFloat( int xx, int yy, float fred, float fgrn, float fblu )
+{
+    // convert float to unorm
+    uint8_t red = (uint8_t)roundf( 255.0f * fred );
+    uint8_t grn = (uint8_t)roundf( 255.0f * fgrn );
+    uint8_t blu = (uint8_t)roundf( 255.0f * fblu );
+    
+    SetPixel( xx, yy, red, grn, blu );
+}
+*/
 
     template <typename T, typename P>
     std::vector<T> postOrder(za::BinTreeNode<T, P> *root, bool print)
@@ -114,6 +138,8 @@ namespace za {
      template <typename T, typename P>
     std::vector<T> preOrder(za::BinTreeNode<T, P> *root, bool print)
     {
+        int delay = 500;
+        std::string screenName = "Level-order Binary Tree Traversal";
         std::stack<BinTreeNode<T, P> *> store;
         std::vector<T> data;
         BinTreeNode<T, P> *current = nullptr;
@@ -152,11 +178,16 @@ namespace za {
      * 
      */
     template <typename T, typename P>
+    //std::vector<T> inOrder(za::BinTreeNode<T, P> *root, bool print,cv::Mat &screen)
     std::vector<T> inOrder(za::BinTreeNode<T, P> *root, bool print)
     {
+        //int delay = 500;
+        std::string screenName = "In-order Binary Tree Traversal";
         std::stack<BinTreeNode<T, P> *> store;
         std::vector<T> data;
         BinTreeNode<T, P> *current = nullptr;
+        //std::map <T, cv::Point_< P >> mp;
+        //cv::Point_< P > prev;
         if(root) store.push(root);
 
         while (!store.empty())
@@ -167,9 +198,28 @@ namespace za {
                 store.push(root);
                 root = root->left;
             }
+
             current = store.top();
             store.pop();
+            /*
+            if(data.size())
+            {
+                prev = mp[data.back()];
+            }
+            */
             data.push_back(current->val());
+            /*
+            mp[current->val()] = cv::Point_< P > (current->pos.x + 2, current->pos.y + 2);
+            za::MyCircle(screen, current->pos); 
+            cv::imshow(screenName, screen);
+            cv::waitKey(delay); 
+            if(data.size() >= 2)
+            {
+                za::MyLine( screen, prev, mp[data.back()], za::BLACK) ;
+                cv::imshow(screenName, screen);
+                cv::waitKey(delay);              
+            }
+            */
             if(current->right)
             {
                 store.push(current->right); 
@@ -177,10 +227,11 @@ namespace za {
             }
      
         }
+        //cv::waitKey(0);  
         if(print)
         {
             std::cout << "\n";
-            std::cout << "In-order Binary Tree Traversal\n";
+            std::cout << screenName <<"\n";
             std::for_each(data.begin(), data.end(), [](T &x){std::cout << x << " ";});
             std::cout << "\n";
         }
@@ -204,6 +255,12 @@ namespace za {
     template <typename T, typename P>
     std::vector<T> levelOrder(za::BinTreeNode<T, P> *root, bool print, cv::Mat &screen)
     {
+        //uint8_t image[ screen.size().width * screen.size().height * 4 ];
+        // Create a gif
+        //GifWriter writer = {};
+        //GifBegin( &writer, filename, width, height, 2, 8, true );        
+        
+        cv::VideoWriter video("./result/levelTrasversal.avi", cv::VideoWriter::fourcc('M','J','P','G'), 10, screen.size());
         std::queue<BinTreeNode<T, P> *> store;
         std::vector<T> data;
         int total = 0;
@@ -211,6 +268,10 @@ namespace za {
         if(root) store.push(root);
         int delay = 500;
         std::string screenName = "Level-order Binary Tree Traversal";
+        //int chCheckForEscKey;
+        //int wordHeight = 50;
+        //int wordWidth = 500;
+        cv::Point leftCorner(120, screen.size().height - 55 );
         while (total = store.size())
         {
 
@@ -221,33 +282,81 @@ namespace za {
                 store.pop();
                 data.push_back(current->val());
                 current->pos;
-                za::MyCircle(screen, current->pos);  
-   
-                za::MyText(screen, current->val(), current->pos,current->orient);
+                za::MyCircle(screen, current->pos, za::RED);  
+                za::MyText(screen, current->val(), current->pos,current->orient, za::RED);
+
+                cv::rectangle(screen, cv::Point(100, screen.size().height - 80), cv::Point(screen.size().width - 100, screen.size().height - 30), za::BLACK);	
+                za::MyText(screen, current->val(), leftCorner,"n", za::RED);
+                video.write(screen);
+/*
+                for( int yy=0; yy<screen.size().height; ++yy )
+                {
+                    for( int xx=0; xx<screen.size().width; ++xx )
+                    {
+                          for(int j = 0; j < frame.cols; j++)
+                            {
+                                Vec3b bgrPixel = foo.at<cv::Vec3b>(i, j);
+
+                                // do something with BGR values...
+                            }                       
+                        float red = 0.5f + 0.5f * cosf(tt+fx);
+                        float grn = 0.5f + 0.5f * cosf(tt+fy+2.f);
+                        float blu = 0.5f + 0.5f * cosf(tt+fx+4.f);
+                        
+                        SetPixelFloat( xx, yy, red, grn, blu );
+                    }
+                }
+                GifWriteFrame( &writer, image, width, height, 2, 8, true );
+
+*/
                 cv::imshow(screenName, screen);
-                cv::waitKey(delay);
+                    if( cv::waitKey(delay) == 27) 
+                    {
+                        cv::waitKey(0);
+                        break;
+                    }   
+                za::MyText(screen, current->val(), leftCorner,"n", za::BLUE);
+                za::MyText(screen, current->val(), current->pos,current->orient, za::BLUE);
+                cv::Point tmp(leftCorner.x+30, screen.size().height - 55 );
+                leftCorner = tmp;
                 //Process left first   
                 if(current->left) 
                 {
                     store.push(current->left); 
-                    za::MyLine( screen, current->pos, current->left->pos) ;
+                    za::MyLine( screen, current->pos, current->left->pos, za::BLACK) ;
+                    video.write(screen);
+                    //GifWriteFrame( &writer, image, width, height, 2, 8, true );
                     cv::imshow(screenName, screen);
-                    cv::waitKey(delay);
+                    if( cv::waitKey(delay) == 27) 
+                    {
+                        cv::waitKey(0);
+                        break;
+                    }   
                 }
                 if(current->right)
                 {
                     store.push(current->right); 
-                    za::MyLine( screen, current->pos, current->right->pos) ;  
+                    za::MyLine( screen, current->pos, current->right->pos, za::BLACK) ;  
+                    video.write(screen);
+                    //GifWriteFrame( &writer, image, width, height, 2, 8, true );
+
                     cv::imshow(screenName, screen);
-                    cv::waitKey(delay);                
+                    if( cv::waitKey(delay) == 27) 
+                    {
+                        cv::waitKey(0);
+                        break;
+                    }               
                 }        
             }
  
      
         }
-  
+        cv::imshow(screenName, screen);
+        cv::waitKey(delay);
         cv::waitKey(0);                       
-
+        video.release();
+         // Write EOF
+        //GifEnd( &writer );
         if(print)
         {
             std::cout << "\n";
