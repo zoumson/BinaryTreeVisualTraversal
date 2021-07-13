@@ -1,2 +1,2 @@
 # BinaryTreeVisualTraversal
-https://user-images.githubusercontent.com/38358621/125417550-faa703c7-c5cd-4ed4-9811-775e4009bff7.mp4
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/38358621/125418471-2c18f5b4-ab0b-4dc2-b5e6-e61790b4e4a7.gif)
