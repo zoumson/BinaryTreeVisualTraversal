@@ -260,6 +260,7 @@ void SetPixelFloat( int xx, int yy, float fred, float fgrn, float fblu )
         //GifWriter writer = {};
         //GifBegin( &writer, filename, width, height, 2, 8, true );        
         
+        //cv::VideoWriter video("./result/levelTrasversal.avi", cv::VideoWriter::fourcc('M','J','P','G'), 10, screen.size());
         cv::VideoWriter video("./result/levelTrasversal.avi", cv::VideoWriter::fourcc('M','J','P','G'), 10, screen.size());
         std::queue<BinTreeNode<T, P> *> store;
         std::vector<T> data;
